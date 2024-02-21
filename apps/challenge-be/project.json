@@ -1,0 +1,52 @@
+{
+  "name": "challenge-be",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/challenge-be/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/challenge-be",
+        "main": "apps/challenge-be/src/main.ts",
+        "tsConfig": "apps/challenge-be/tsconfig.app.json",
+        "webpackConfig": "apps/challenge-be/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "challenge-be:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "challenge-be:build:development"
+        },
+        "production": {
+          "buildTarget": "challenge-be:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/challenge-be/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
